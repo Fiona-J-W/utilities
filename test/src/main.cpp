@@ -1,6 +1,7 @@
-#include "test_algorithm.hpp"
 
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MAIN
 
-int main() {
-	test_algorithm();
-}
+#define BOOST_TEST_MODULE utilities main
+#include <boost/test/unit_test.hpp>
+
