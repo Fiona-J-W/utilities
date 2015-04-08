@@ -11,7 +11,7 @@ FLAGS +=  -Wall -Wextra -Wpedantic -std=c++1y -O0 -D_GLIBCXX_DEBUG -g
 LIBS += -lboost_unit_test_framework 
 INCLUDES += 
 TARGET = bin/test
-OBJECTS = build/main.o build/test_algorithm.o
+OBJECTS = build/algorithm.o build/main.o
 
 
 ####################
@@ -35,7 +35,7 @@ all: $(TARGET)
 #Dependencies:
 
 
-build/main.o: src/main.cpp makefile
+build/algorithm.o: src/algorithm.cpp makefile
 
-build/test_algorithm.o: src/test_algorithm.cpp makefile
+build/main.o: src/main.cpp makefile
 
