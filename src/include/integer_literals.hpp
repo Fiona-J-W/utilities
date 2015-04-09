@@ -74,21 +74,28 @@ struct integer_parser_impl<Integer, Base, C> {
 	const constexpr static Integer value = char_to_digit<Base>(C);
 };
 
+template <typename Integer, unsigned Base, char... Digits>
+struct integer_parser_impl_zero_cutter: integer_parser_impl<Integer, Base, Digits...> {};
+
+template <typename Integer, unsigned Base, char... Digits>
+struct integer_parser_impl_zero_cutter<Integer, Base, '0', Digits...>:
+	integer_parser_impl_zero_cutter<Integer, Base, Digits...> {};
+
 template <typename Integer, char... Digits>
 struct integer_parser
     : std::integral_constant<Integer, integer_parser_impl<Integer, 10, Digits...>::value> {};
 
 template <typename Integer, char... Digits>
 struct integer_parser<Integer, '0', 'b', Digits...>
-    : std::integral_constant<Integer, integer_parser_impl<Integer, 2, Digits...>::value> {};
+    : std::integral_constant<Integer, integer_parser_impl_zero_cutter<Integer, 2, Digits...>::value> {};
 
 template <typename Integer, char... Digits>
 struct integer_parser<Integer, '0', 'x', Digits...>
-    : std::integral_constant<Integer, integer_parser_impl<Integer, 16, Digits...>::value> {};
+    : std::integral_constant<Integer, integer_parser_impl_zero_cutter<Integer, 16, Digits...>::value> {};
 
 template <typename Integer, char... Digits>
 struct integer_parser<Integer, '0', Digits...>
-    : std::integral_constant<Integer, integer_parser_impl<Integer, 8, Digits...>::value> {};
+    : std::integral_constant<Integer, integer_parser_impl_zero_cutter<Integer, 8, Digits...>::value> {};
 
 template <typename Integer>
 struct integer_parser<Integer, '0'> : std::integral_constant<Integer, 0> {};
