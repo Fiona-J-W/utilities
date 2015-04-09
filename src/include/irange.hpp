@@ -1,6 +1,7 @@
 #ifndef UTILITIES_NUMBER_RANGE_HPP
 #define UTILITIES_NUMBER_RANGE_HPP
 
+#include <cassert>
 #include <iterator>
 #include <cstdint>
 
@@ -17,76 +18,83 @@ public:
 	using iterator_category = std::random_access_iterator_tag;
 	using pointer = ::util::pointer<const Number>;
 
-	fixed_number_iterator(): current_value{0} {}
-	fixed_number_iterator(Number start_value): current_value{start_value} {}
+	fixed_number_iterator(): m_current_value{0} {}
+	fixed_number_iterator(Number start_value): m_current_value{start_value} {}
 
 	reference operator*() const {
-		return current_value;
+		return m_current_value;
 	}
 	pointer operator->() const {
-		return &current_value;
+		return &m_current_value;
 	}
 	
 	fixed_number_iterator operator++() {
-		current_value += Step;
+		m_current_value += Step;
 		return *this;
 	}
 
 	fixed_number_iterator operator++(int) {
 		auto tmp = *this;
-		current_value += Step;
+		m_current_value += Step;
 		return tmp;
 	}
 
 	fixed_number_iterator operator--() {
-		current_value -= Step;
+		m_current_value -= Step;
 		return *this;
 	}
 
 	fixed_number_iterator operator--(int) {
 		auto tmp = *this;
-		current_value -= Step;
+		m_current_value -= Step;
 		return tmp;
 	}
 
 	Number operator[](difference_type n) {
-		return current_value + (Step * n);
+		return m_current_value + (Step * n);
 	}
 
 	fixed_number_iterator operator+=(difference_type n) {
-		current_value += n * Step;
+		m_current_value += n * Step;
 		return *this;
 	}
 
 	fixed_number_iterator& operator+(difference_type n) const {
-		return fixed_number_iterator{current_value + Step * n};
+		return fixed_number_iterator{m_current_value + Step * n};
 	}
 
 	fixed_number_iterator operator-=(difference_type n) {
-		current_value -= n * Step;
+		m_current_value -= n * Step;
 		return *this;
 	}
 
 	fixed_number_iterator& operator-(difference_type n) const {
-		return fixed_number_iterator{current_value - Step * n};
+		return fixed_number_iterator{m_current_value - Step * n};
 	}
 
 	friend bool operator==(fixed_number_iterator lhs, fixed_number_iterator rhs) {
-		return lhs.current_value == rhs.current_value;
+		return lhs.m_current_value == rhs.m_current_value;
 	}
 	friend bool operator!=(fixed_number_iterator lhs, fixed_number_iterator rhs) { return !(lhs == rhs); }
 
 	friend bool operator<(fixed_number_iterator lhs, fixed_number_iterator rhs) {
-		return lhs.current_value < rhs.current_value;
+		return lhs.m_current_value < rhs.m_current_value;
 	}
 	friend bool operator>(fixed_number_iterator lhs, fixed_number_iterator rhs) { return rhs < lhs; }
 	friend bool operator<=(fixed_number_iterator lhs, fixed_number_iterator rhs) { return !(rhs < lhs); }
 	friend bool operator>=(fixed_number_iterator lhs, fixed_number_iterator rhs) { return !(lhs > rhs); }
 	friend difference_type operator-(fixed_number_iterator lhs, fixed_number_iterator rhs) {
-		return (lhs.current_value - rhs.current_value)/Step; }
+		return (lhs.m_current_value - rhs.m_current_value)/Step; }
 private:
-	Number current_value;
+	Number m_current_value;
 };
+
+template<typename Number, Number Step>
+auto operator-(fixed_number_iterator<Number, Step> lhs, fixed_number_iterator<Number, Step> rhs)
+		->typename fixed_number_iterator<Number, Step>::difference_type {
+	assert(*rhs % Step == *lhs % Step);
+	return (*lhs - *rhs) / Step;
+}
 
 template<typename Number, Number Step = 1>
 class fixed_number_range {
@@ -138,77 +146,90 @@ public:
 	using iterator_category = std::random_access_iterator_tag;
 	using pointer = ::util::pointer<const Number>;
 
-	number_iterator(): current_value{0} {}
-	number_iterator(Number start_value): current_value{start_value} {}
-	number_iterator(Number start_value, Number step): current_value{start_value}, step{step} {}
+	number_iterator(): m_current_value{0} {}
+	number_iterator(Number start_value): m_current_value{start_value} {}
+	number_iterator(Number start_value, Number step): m_current_value{start_value}, m_step{step} {}
+
+	Number step() const {return m_step;}
 
 	reference operator*() const {
-		return current_value;
+		return m_current_value;
 	}
 	pointer operator->() const {
-		return &current_value;
+		return &m_current_value;
 	}
 	
 	number_iterator operator++() {
-		current_value += step;
+		m_current_value += m_step;
 		return *this;
 	}
  
 	number_iterator operator++(int) {
 		auto tmp = *this;
-		current_value += step;
+		m_current_value += m_step;
 		return tmp;
 	}
 
 	number_iterator operator--() {
-		current_value -= step;
+		m_current_value -= m_step;
 		return *this;
 	}
 
 	number_iterator operator--(int) {
 		auto tmp = *this;
-		current_value -= step;
+		m_current_value -= m_step;
 		return tmp;
 	}
 
 	Number operator[](difference_type n) {
-		return current_value + (step * n);
+		return m_current_value + (m_step * n);
 	}
 
 	number_iterator operator+=(difference_type n) {
-		current_value += n * step;
+		m_current_value += n * m_step;
 		return *this;
 	}
 
 	number_iterator& operator+(difference_type n) const {
-		return number_iterator{current_value + step * n};
+		return number_iterator{m_current_value + m_step * n};
 	}
 
 	number_iterator operator-=(difference_type n) {
-		current_value -= n * step;
+		m_current_value -= n * m_step;
 		return *this;
 	}
 
 	number_iterator& operator-(difference_type n) const {
-		return number_iterator{current_value - step * n};
+		return number_iterator{m_current_value - m_step * n};
 	}
 
 	friend bool operator==(number_iterator lhs, number_iterator rhs) {
-		return lhs.current_value == rhs.current_value;
+		assert(lhs.m_step = rhs.m_step);
+		return lhs.m_current_value == rhs.m_current_value;
 	}
 	friend bool operator!=(number_iterator lhs, number_iterator rhs) { return !(lhs == rhs); }
 
 	friend bool operator<(number_iterator lhs, number_iterator rhs) {
-		return lhs.current_value < rhs.current_value;
+		assert(lhs.m_step = rhs.m_step);
+		return lhs.m_current_value < rhs.m_current_value;
 	}
 	friend bool operator>(number_iterator lhs, number_iterator rhs) { return rhs < lhs; }
 	friend bool operator<=(number_iterator lhs, number_iterator rhs) { return !(rhs < lhs); }
 	friend bool operator>=(number_iterator lhs, number_iterator rhs) { return !(lhs > rhs); }
 private:
-	Number current_value;
-	Number step = 1;
+	Number m_current_value;
+	Number m_step = 1;
 };
 
+
+template<typename Number>
+auto operator-(number_iterator<Number> lhs, number_iterator<Number> rhs)
+		->typename number_iterator<Number>::difference_type {
+	assert(lhs.step() == rhs.step());
+	const auto step = lhs.step();
+	assert(*rhs % step == *lhs % step);
+	return (*lhs - *rhs) / step;
+}
 
 
 template<typename Number>
@@ -257,14 +278,14 @@ number_range<Number> make_number_range(Number low, Number high, Number step) {
 
 ///////////////////////
 
-template<typename Number>
-fixed_number_range<Number, 1> irange(Number high) {
-	return make_fixed_number_range<Number, 1>({0}, high);
+template<typename Number, Number Step = 1>
+fixed_number_range<Number, Step> irange(Number high) {
+	return make_fixed_number_range<Number, Step>({0}, high);
 }
 
-template<typename Number>
-fixed_number_range<Number, 1> irange(Number low, Number high) {
-	return make_fixed_number_range<Number, 1>(low, high);
+template<typename Number, Number Step = 1>
+fixed_number_range<Number, Step> irange(Number low, Number high) {
+	return make_fixed_number_range<Number, Step>(low, high);
 }
 
 template<typename Number>
