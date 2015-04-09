@@ -21,19 +21,17 @@ Current features
 * `string.hpp`: Simple utilites for working with strings.
 * `timer.hpp`: A nanosecond-precission-timer to ease the creation of benchmarks.
 
-Currently Tasks
----------------
+Current Tasks
+-------------
 
-* There are basically never as much unit-tests as one would like, but the situation is not as bad as it
-  could be.
+* There are basically never as many unit-tests as one would like.
 * More algorithms are always better.
-* More ranges are even better.
+* The same goes for more ranges.
 
 License
 -------
 
 LGPLv3 or, at your option, any later version of the GPL.
 
-As usual: If this doesn't fit your needs, contact me, it's always possible for me to allow you to use it under
-different terms.
+As usual: If this doesn't fit your needs, contact me, and we might find a solution.
 
