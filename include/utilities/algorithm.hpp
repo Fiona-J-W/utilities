@@ -3,21 +3,46 @@
 
 #include <cassert>
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include <cstdint>
 
 namespace util {
 
 template<typename Iterator, typename Value>
-bool contains(Iterator begin, Iterator end, const Value& val) {
+bool is_any_of(Iterator begin, Iterator end, const Value& val) {
 	return std::find(begin, end, val) != end;
 }
 
 template<typename Container, typename Value>
-bool contains(const Container& container, const Value& val) {
+bool is_any_of(const Container& container, const Value& val) {
 	using std::begin;
 	using std::end;
-	return contains(begin(container), end(container), val);
+	return is_any_of(begin(container), end(container), val);
+}
+
+template<typename Iterator, typename Value>
+bool is_none_of(Iterator begin, Iterator end, const Value& val) {
+	return std::find(begin, end, val) == end;
+}
+
+template<typename Container, typename Value>
+bool is_none_of(const Container& container, const Value& val) {
+	using std::begin;
+	using std::end;
+	return is_none_of(begin(container), end(container), val);
+}
+
+template<typename Iterator, typename Value>
+bool is_all_of(Iterator begin, Iterator end, const Value& val) {
+	return std::all_of(begin, end, [&](auto& arg){return arg==val;});
+}
+
+template<typename Container, typename Value>
+bool is_all_of(const Container& container, const Value& val) {
+	using std::begin;
+	using std::end;
+	return is_all_of(begin(container), end(container), val);
 }
 
 template<typename Container, typename Pred>
