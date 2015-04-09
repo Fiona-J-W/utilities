@@ -26,7 +26,6 @@ Currently Tasks
 
 * There are basically never as much unit-tests as one would like, but the situation is not as bad as it
   could be.
-* Switching to Cmake as build-system.
 * More algorithms are always better.
 * More ranges are even better.
 

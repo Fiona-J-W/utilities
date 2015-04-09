@@ -1,4 +1,4 @@
-#include "../../src/include/enforce.hpp"
+#include "utilities/enforce.hpp"
 
 #include <fstream>
 
