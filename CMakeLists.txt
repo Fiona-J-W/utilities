@@ -41,7 +41,7 @@ include_directories("include")
 set(IncludePath "include/utilities")
 file(GLOB library_headers "${INCLUDEPATH}/*.hpp")
 
-# If this doesn't work on non-unix: patches are apreciated:
+# If this doesn't work on non-unix: patches are appreciated:
 install(DIRECTORY ${IncludePath} DESTINATION "include")
 
 add_custom_target(uninstall COMMAND
