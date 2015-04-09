@@ -21,17 +21,19 @@ Current features
 * `string.hpp`: Simple utilites for working with strings.
 * `timer.hpp`: A nanosecond-precission-timer to ease the creation of benchmarks.
 
-Currently in an awfull state
-----------------------------
+Currently Tasks
+---------------
 
-* There are almost no unit-tests at the moment. This is not **as** terrible as it sounds, since some parts of the library
-  were basically moved here from [libyoga](https://github.com/Florianjw/libyoga) where they received a little bit of
-  testing, but it is of course still no situation that is acceptable for the long-term.
+* There are basically never as much unit-tests as one would like, but the situation is not as bad as it
+  could be.
+* Switching to Cmake as build-system.
+* More algorithms are always better.
+* More ranges are even better.
 
 License
 -------
 
-GPLv3 or, at your option, any later version of the GPL.
+LGPLv3 or, at your option, any later version of the GPL.
 
 As usual: If this doesn't fit your needs, contact me, it's always possible for me to allow you to use it under
 different terms.
