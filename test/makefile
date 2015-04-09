@@ -17,6 +17,7 @@ OBJECTS = \
 	build/integer_literals.o \
 	build/irange.o \
 	build/main.o \
+	build/string.o \
 
 
 
@@ -50,4 +51,6 @@ build/integer_literals.o: src/integer_literals.cpp makefile
 build/irange.o: src/irange.cpp makefile
 
 build/main.o: src/main.cpp makefile
+
+build/string.o: src/string.cpp makefile
 
