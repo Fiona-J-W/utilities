@@ -28,3 +28,11 @@ BOOST_AUTO_TEST_CASE(mutable_functor) {
 	BOOST_CHECK(is_equal(actual, expected));
 }
 
+BOOST_AUTO_TEST_CASE(range_for) {
+	auto actual = std::vector<int>{};
+	const auto expected = {3, 4};
+	for(auto i: util::filter(util::irange(5), [](auto i){return i > 2;})) {
+		actual.push_back(i);
+	}
+	BOOST_CHECK(is_equal(actual, expected));
+}
