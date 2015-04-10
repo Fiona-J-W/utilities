@@ -12,7 +12,7 @@ Current features
   to remove values from containers, ˙
 * `carthesian_product.hpp`: Functionality to create a range that represents the carthesian product
   of an arbitrary number of other ranges.
-* `core.hpp`: Tiniest utilities both for the library itself as for users. Currently only an alias for pointers.
+* `core.hpp`: Tiny utilities both for the library itself as for its users.
 * `enforce.hpp`: Functions that throw an exception if their argument is not what it should be.
 * `filter.hpp`: A filtered view on a range.
 * `integer_literals.hpp`: User-defined literals to create fixed-sized-integers, size\_t or ptrdiff\_t.
