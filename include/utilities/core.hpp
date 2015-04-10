@@ -1,6 +1,8 @@
 #ifndef UTILITIES_CORE_HPP
 #define UTILITIES_CORE_HPP
 
+#include <iterator>
+
 /**
  * Resolves overloaded functions when passing them to
  * function-templates.
@@ -20,9 +22,11 @@
 
 namespace util {
 
-	template<typename T> using pointer = T*;
+template<typename T> using pointer = T*;
 
-}
+
+
+} // namespace util
 
 
 #endif
