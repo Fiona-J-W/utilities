@@ -14,6 +14,7 @@ Current features
   of an arbitrary number of other ranges.
 * `core.hpp`: Tiniest utilities both for the library itself as for users. Currently only an alias for pointers.
 * `enforce.hpp`: Functions that throw an exception if their argument is not what it should be.
+* `filter.hpp`: A filtered view on a range.
 * `integer_literals.hpp`: User-defined literals to create fixed-sized-integers, size\_t or ptrdiff\_t.
 * `irange.hpp`: Basically pythons `range()` with a little bit more functinality.
 * `random.hpp`: Facilities to ease the use of C++'s random-number-library in the 99% of trivial cases.
