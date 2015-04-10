@@ -17,6 +17,8 @@ Current features
 * `filter.hpp`: A filtered view on a range.
 * `integer_literals.hpp`: User-defined literals to create fixed-sized-integers, size\_t or ptrdiff\_t.
 * `irange.hpp`: Basically pythons `range()` with a little bit more functinality.
+* `mut_arguments.hpp`: Facilities to pass mutable references (or better: something similar) in
+  a way that is visible at the call side, providing errors, if this accidentially isn't done.
 * `random.hpp`: Facilities to ease the use of C++'s random-number-library in the 99% of trivial cases.
 * `reference.hpp`: A reference that can be reassigned. Bassicaly an `observer_ptr` that cannot be null.
 * `string.hpp`: Simple utilites for working with strings.
