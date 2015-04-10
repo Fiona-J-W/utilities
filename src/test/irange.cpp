@@ -4,8 +4,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(irange);
-
 
 BOOST_AUTO_TEST_CASE(single_arg_irange_1) {
 	const auto expected = {0u, 1u, 2u};
@@ -79,4 +77,3 @@ BOOST_AUTO_TEST_CASE(number_iterator_distance) {
 	BOOST_CHECK_EQUAL((dynamic_range.end() - dynamic_range.begin()), 2);
 }
 
-BOOST_AUTO_TEST_SUITE_END();

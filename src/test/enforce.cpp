@@ -4,8 +4,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(enforce);
-
 BOOST_AUTO_TEST_CASE(default_case) {
 	BOOST_CHECK_THROW(util::enforce(false, ""), std::runtime_error);
 	BOOST_CHECK_NO_THROW(util::enforce(true, ""));
@@ -35,4 +33,3 @@ BOOST_AUTO_TEST_CASE(stream) {
 	// BOOST_CHECK_NO_THROW(util::enforce_opened(stream, ""));
 }
 
-BOOST_AUTO_TEST_SUITE_END();

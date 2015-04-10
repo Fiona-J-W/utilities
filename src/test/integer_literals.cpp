@@ -4,8 +4,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(integer_literals);
-
 using namespace util::integer_literals;
 
 BOOST_AUTO_TEST_CASE(zero) {
@@ -84,5 +82,3 @@ BOOST_AUTO_TEST_CASE(hex) {
 	BOOST_CHECK_EQUAL(0x4'4, 0x4'4_pd);
 }
 
-
-BOOST_AUTO_TEST_SUITE_END();

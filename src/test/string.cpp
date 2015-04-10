@@ -2,8 +2,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(string);
-
 using namespace std::string_literals;
 
 BOOST_AUTO_TEST_CASE(whitspace) {
@@ -56,7 +54,4 @@ BOOST_AUTO_TEST_CASE(strip) {
 	BOOST_CHECK_EQUAL("foo bar"s, util::strip(" foo bar "s));
 	BOOST_CHECK_EQUAL("foo  bar"s, util::strip(" foo  bar "s));
 }
-
-
-BOOST_AUTO_TEST_SUITE_END();
 

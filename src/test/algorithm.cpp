@@ -5,8 +5,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE(algorithms);
-
 BOOST_AUTO_TEST_CASE(is_any_none_all_of) {
 	using namespace std::string_literals;
 
@@ -42,5 +40,3 @@ BOOST_AUTO_TEST_CASE(unstable_erase_one_1){
 	BOOST_CHECK(vec == std::vector<int>{1});
 }
 
-
-BOOST_AUTO_TEST_SUITE_END();

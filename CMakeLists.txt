@@ -47,16 +47,27 @@ install(DIRECTORY ${IncludePath} DESTINATION "include")
 add_custom_target(uninstall COMMAND
 	${CMAKE_COMMAND} -E remove_directory "${CMAKE_INSTALL_PREFIX}/include/utilities")
 
-if(BUILD_TESTS)
-	file(GLOB test_sources "src/test/*.cpp")
-	add_executable(tests
-		${test_sources}
-	)
-	target_link_libraries(tests
+function(addUnitTest Filename)
+	get_filename_component(Test ${Filename} NAME_WE )
+	set_property(SOURCE ${Filename} APPEND PROPERTY COMPILE_DEFINITIONS
+		BOOST_TEST_DYN_LINK
+		BOOST_TEST_MAIN
+		BOOST_TEST_MODULE=${Test})
+	set(TestName "test_${Test}")
+	add_executable(${TestName} ${Source})
+	target_link_libraries(${TestName}
 		${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
 	)
 	add_test(
-		NAME Unit-Tests
-		COMMAND tests
+		NAME "<${Test}.hpp>"
+		COMMAND ${TestName}
 	)
+endfunction(addUnitTest)
+
+if(BUILD_TESTS)
+	file(GLOB TestSources "src/test/*.cpp")
+
+	foreach(Source ${TestSources})
+		addUnitTest(${Source})
+	endforeach(Source)
 endif()
