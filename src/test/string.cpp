@@ -55,3 +55,8 @@ BOOST_AUTO_TEST_CASE(strip) {
 	BOOST_CHECK_EQUAL("foo  bar"s, util::strip(" foo  bar "s));
 }
 
+BOOST_AUTO_TEST_CASE(concat) {
+	BOOST_CHECK_EQUAL("abcdefg"s, util::concat("ab", "cd"s, "e", "", "f"s, 'g'));
+	BOOST_CHECK_EQUAL(""s, util::concat());
+	BOOST_CHECK_EQUAL("abc"s, util::concat('a', 'b', 'c'));
+}
