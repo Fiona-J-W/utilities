@@ -8,6 +8,8 @@
 #include <vector>
 #include <functional>
 
+#include "core.hpp"
+
 namespace util {
 
 template<std::size_t N>
@@ -48,9 +50,8 @@ inline Integer rand_int(Integer min, Integer max) {
 template<typename T>
 inline std::vector<T> make_random_vec(std::size_t size) {
 	std::vector<T> returnvec;
-	for (std::size_t i =0; i < size; ++i) {
-		returnvec.push_back(rand_int<T>());
-	}
+	returnvec.reserve(size);
+	std::generate_n(std::back_inserter(returnvec), size, UTIL_RESOLVE(rand_int<T>));
 	return returnvec;
 }
 
