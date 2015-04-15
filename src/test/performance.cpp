@@ -9,9 +9,10 @@
 #define UTILITIES_ENABLE_EXPERIMENTAL_FEATURES
 #endif
 
-#include "utilities/irange.hpp"
-#include "utilities/timer.hpp"
 #include "utilities/carthesian_product.hpp"
+#include "utilities/irange.hpp"
+#include "utilities/string.hpp"
+#include "utilities/timer.hpp"
 
 
 std::pair<unsigned long, int> test_carthesian_product() {
@@ -74,4 +75,40 @@ BOOST_AUTO_TEST_CASE(carthesian_product_vs_loops) {
 	}
 }
 
+BOOST_AUTO_TEST_CASE(operator_plus_vs_concat) {
+	using util::timer;
+	auto plus   = std::vector<timer::tick_type>{};
+	auto concat = std::vector<timer::tick_type>{};
+	using namespace std::string_literals;
+	const auto str1 = "foobar";
+	const auto str2 = "foobar"s;
+	const auto str3 = "foobar";
+	const auto str4 = "foobar"s;
+	const auto str5 = "foobar";
+	const auto str6 = "foobar"s;
 
+	for(auto i: util::irange(30)) {
+		(void) i;
+		{
+			auto t = util::timer{};
+			t.start();
+			const auto result = str1 + str2 + str3 + str4 + str5 + str6;
+			t.stop();
+			plus.push_back(t.ticks());
+		}
+		{
+			auto t = util::timer{};
+			t.start();
+			const auto result = util::concat(str1, str2, str3, str4, str5, str6);
+			t.stop();
+			concat.push_back(t.ticks());
+		}
+	}
+	const auto total_plus   = std::accumulate(plus.begin(), plus.end(), timer::tick_type{});
+	const auto total_concat = std::accumulate(concat.begin(), concat.end(), timer::tick_type{});
+	// This should be clear enough to allow this test:
+	BOOST_CHECK(total_plus > total_concat);
+	std::cout
+		<< "plus:   " << total_plus << '\n'
+		<< "concat: " << total_concat << '\n';
+}
