@@ -7,6 +7,8 @@
 
 #include <experimental/string_view>
 
+#include "core.hpp"
+
 namespace util {
 
 namespace impl {
@@ -38,7 +40,7 @@ void append(std::string& str, const char(&postfix)[N]) {
 
 
 inline std::string::const_iterator find_non_whitespace(const std::string& str) {
-	return std::find_if_not(str.begin(), str.end(), [](char c){return std::isspace(c);});
+	return std::find_if_not(str.begin(), str.end(), UTIL_RESOLVE(std::isspace));
 }
 
 inline bool is_empty_or_comment(const std::string& str, char comment_start = '#') {
@@ -48,15 +50,15 @@ inline bool is_empty_or_comment(const std::string& str, char comment_start = '#'
 
 inline std::string strip(const std::string& str) {
 	using rev_it = std::reverse_iterator<std::string::const_iterator>;
-	auto first = std::find_if_not(str.begin(), str.end(), std::isblank);
-	auto last = std::find_if_not(str.rbegin(), rev_it{first}, std::isblank).base();
+	auto first = std::find_if_not(str.begin(), str.end(), UTIL_RESOLVE(std::isblank));
+	auto last = std::find_if_not(str.rbegin(), rev_it{first}, UTIL_RESOLVE(std::isblank)).base();
 	return std::string(first, last);
 }
 
 template<typename... Strings>
 std::string concat(std::string head, const Strings&... strings) {
 	const auto sizes = std::initializer_list<std::size_t>{impl::string_size(strings)...};
-	const auto total_size = std::accumulate(sizes.begin(), sizes.end(), std::size_t{}) + head.size();
+	const auto total_size = std::accumulate(sizes.begin(), sizes.end(), head.size());
 	head.reserve(total_size);
 	// The initializer list guarantees the correct execution-order:
 	(void) std::initializer_list<int>{(impl::append(head, strings),0)...};
