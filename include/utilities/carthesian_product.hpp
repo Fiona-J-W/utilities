@@ -2,6 +2,15 @@
 #ifndef UTILITIES_MULTI_RANGE_HPP
 #define UTILITIES_MULTI_RANGE_HPP
 
+
+/*
+ * Sadly the EXTREME runtime-overhead makes it impossible
+ * to recommend actual usage at this point.
+ */
+#ifndef UTILITIES_ENABLE_EXPERIMENTAL_FEATURES
+#error "experimental featues have to be enabled via a compile-switch"
+#endif
+
 #include <utility>
 #include <iterator>
 #include <tuple>
@@ -11,6 +20,7 @@
 #include "core.hpp"
 
 namespace util {
+namespace experimental {
 
 template <typename CarthesianProductRange>
 class carthesian_product_iterator;
@@ -167,6 +177,6 @@ carthesian_product_range<Ranges...> carthesian_product(Ranges&&... ranges) {
 	return carthesian_product_range<Ranges...>{std::forward<Ranges>(ranges)...};
 }
 
-} // namespace util
+}} // namespace util::experimental
 
 #endif
