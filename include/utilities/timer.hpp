@@ -11,6 +11,7 @@ public:
 	using duration_type = std::chrono::nanoseconds;
 	using clock = std::chrono::steady_clock;
 	using time_point = std::chrono::time_point<clock>;
+	using tick_type = duration_type::rep;
 	
 	void start() {
 		m_start = clock::now();
