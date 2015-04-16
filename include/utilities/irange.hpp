@@ -16,7 +16,7 @@ public:
 	using reference = const Number&;
 	using difference_type = std::ptrdiff_t;
 	using iterator_category = std::random_access_iterator_tag;
-	using pointer = ::util::pointer<const Number>;
+	using pointer = pointer<const Number>;
 
 	fixed_number_iterator(): m_current_value{0} {}
 	fixed_number_iterator(Number start_value): m_current_value{start_value} {}
