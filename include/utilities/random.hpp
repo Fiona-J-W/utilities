@@ -12,18 +12,13 @@
 
 namespace util {
 
-template<std::size_t N>
-std::seed_seq get_seed() {
-	auto data = std::array<std::uint32_t, N>{};
-	std::random_device rd{};
-	std::generate(data.begin(), data.end(), std::ref(rd));
-	return std::seed_seq(data.begin(), data.end());
-}
-
 inline std::mt19937& get_urng() {
 	thread_local static auto urng = []{
 		// 624 = size of the state in mt19937
-		auto seed = get_seed<624>();
+		auto data = std::array<std::uint32_t, 624>{};
+		std::random_device rd{};
+		std::generate(data.begin(), data.end(), std::ref(rd));
+		std::seed_seq seed(data.begin(), data.end());
 		return std::mt19937{seed};
 	}();
 	return urng;
