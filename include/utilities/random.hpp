@@ -17,7 +17,7 @@ std::seed_seq get_seed() {
 	auto data = std::array<std::uint32_t, N>{};
 	std::random_device rd{};
 	std::generate(data.begin(), data.end(), std::ref(rd));
-	return std::seed_seq{data.begin(), data.end()};
+	return std::seed_seq(data.begin(), data.end());
 }
 
 inline std::mt19937& get_urng() {
