@@ -1,0 +1,6 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+# Change this to your needs
+script: cmake -DCMAKE_BUILD_TYPE=Debug && make && make test
