@@ -38,6 +38,22 @@ bool is_all_of(Iterator begin, Iterator end, const Value& val) {
 	return std::all_of(begin, end, [&](auto& arg){return arg==val;});
 }
 
+template<typename InIterator, typename OutIterator, typename Pred, typename Fun>
+void transform_if(InIterator it, InIterator last, OutIterator out, Pred pred, Fun fun) {
+	for (;it != last; ++it) {
+		if(pred(*it)) {
+			*out = fun(*it);
+			++out;
+		}
+	}
+}
+template<typename Container, typename OutIterator, typename Pred, typename Fun>
+void transform_if(const Container& container, OutIterator out, Pred pred, Fun fun) {
+	using std::begin;
+	using std::end;
+	return transform_if(begin(container), end(container), out, pred, fun);
+}
+
 template<typename Container, typename Value>
 bool is_all_of(const Container& container, const Value& val) {
 	using std::begin;
